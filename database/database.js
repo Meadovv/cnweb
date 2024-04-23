@@ -1,10 +1,11 @@
 const { createPool } = require('mysql2/promise');
+const database_config = require('../configs/database.config');
 
 const pool = createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '123456789',
-  database: 'cnweb35',
+  host: database_config.host,
+  user: database_config.user,
+  password: database_config.password,
+  database: database_config.database,
   waitForConnections: true,
   connectionLimit: 10,
 });

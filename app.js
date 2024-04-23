@@ -1,7 +1,18 @@
+// require('./migration/migration.js')
+
 const express = require('express');
-const {query} = require("./database/database.js")
+const { query } = require("./database/database.js")
 const app = express();
-const port = 3000;
+const app_config = require('./configs/app.config');
+const router = require('./routes/router');
+const port = app_config.port || 3000;
+
+app.use(express.json({
+  limit: '2mb'
+}));
+app.use(express.urlencoded({
+  extended: true
+}));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -10,6 +21,8 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is listening at http://localhost:${port}`);
 });
+
+app.use('/api/v1', router);
 
 (async () => {
   try {
